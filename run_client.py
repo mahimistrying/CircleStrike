@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Client launcher script for Multishot multiplayer game
+Client launcher script for CircleStrike multiplayer game
 """
 
 import sys
@@ -13,7 +13,7 @@ from client import MultiplayerClient
 
 if __name__ == "__main__":
     print("=" * 50)
-    print("MULTISHOT MULTIPLAYER SHOOTER - CLIENT")
+    print("CIRCLESTRIKE MULTIPLAYER SHOOTER - CLIENT")
     print("=" * 50)
     print()
 

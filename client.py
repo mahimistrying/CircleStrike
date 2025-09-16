@@ -106,7 +106,7 @@ class MultiplayerClient:
         self.connected = False
 
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-        pygame.display.set_caption("Multishot - Multiplayer Client")
+        pygame.display.set_caption("CircleStrike - Multiplayer Client")
         self.clock = pygame.time.Clock()
         self.running = True
 

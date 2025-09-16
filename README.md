@@ -1,4 +1,4 @@
-# Multishot - Multiplayer Shooter Game
+# CircleStrike - Multiplayer Shooter Game
 
 A real-time multiplayer 2D shooter game built with Python and Pygame.
 

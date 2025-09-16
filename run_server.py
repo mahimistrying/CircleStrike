@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Server launcher script for Multishot multiplayer game
+Server launcher script for CircleStrike multiplayer game
 """
 
 import sys
@@ -13,7 +13,7 @@ from server import GameServer
 
 if __name__ == "__main__":
     print("=" * 50)
-    print("MULTISHOT MULTIPLAYER SHOOTER - SERVER")
+    print("CIRCLESTRIKE MULTIPLAYER SHOOTER - SERVER")
     print("=" * 50)
     print()
 
