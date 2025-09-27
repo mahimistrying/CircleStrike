@@ -29,21 +29,14 @@ pip install -r requirements.txt
 
 1. **Start the Server:**
    ```bash
-   python run_server.py
-   ```
-   Or directly:
-   ```bash
    python server.py
    ```
 
 2. **Connect Clients:**
    ```bash
-   python run_client.py
-   ```
-   Or directly:
-   ```bash
    python client.py
    ```
+   Run this command in separate terminals for each player.
 
 3. **Local Testing:**
    For single-player testing:
@@ -76,12 +69,10 @@ pip install -r requirements.txt
 ## File Structure
 
 ```
-multishot/
+circlestrike/
 ├── game.py           # Single-player version for testing
 ├── server.py         # Game server
 ├── client.py         # Multiplayer client
-├── run_server.py     # Server launcher with UI
-├── run_client.py     # Client launcher with UI
 ├── requirements.txt  # Python dependencies
 └── README.md        # This file
 ```
@@ -133,6 +124,41 @@ The game is designed to be easily extensible. Some ideas:
 - Try `python -m pip install pygame` if regular pip fails
 - Ensure Python 3.7+ is being used
 
+## Documentation
+
+- **[Developer Guide](DEVELOPER_GUIDE.md)** - Technical documentation and architecture
+- **[Contributing](CONTRIBUTING.md)** - How to contribute to the project
+- **[Changelog](CHANGELOG.md)** - Version history and planned features
+
+## Development
+
+### For Developers
+If you want to contribute or modify the game, check out the comprehensive documentation:
+
+- **Architecture**: Client-server with TCP networking and JSON protocol
+- **Adding Features**: Detailed guides for adding new game mechanics
+- **Code Structure**: Well-documented classes and functions
+- **Testing**: Guidelines for testing multiplayer functionality
+
+### Future Features
+- Power-ups (speed boost, rapid fire, shield)
+- Different maps with obstacles
+- Team-based gameplay modes
+- Sound effects and music
+- Better graphics and animations
+- Server browser
+- Statistics tracking
+
+See [CHANGELOG.md](CHANGELOG.md) for the complete roadmap.
+
+## Contributing
+
+We welcome contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for:
+- How to set up development environment
+- Code style guidelines
+- Pull request process
+- Issue reporting guidelines
+
 ## License
 
-This project is open source and available under the MIT License.
+This project is open source and available under the MIT License. See [LICENSE](LICENSE) for details.

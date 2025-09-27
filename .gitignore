@@ -40,3 +40,9 @@ Thumbs.db
 *.log
 saves/
 screenshots/
+
+# Documentation (keep local only)
+DEVELOPER_GUIDE.md
+CONTRIBUTING.md
+CHANGELOG.md
+LICENSE
