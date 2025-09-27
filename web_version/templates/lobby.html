@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CircleStrike - Lobby</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lobby-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px;
+            border-radius: 15px;
+            border: 3px solid #fff;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        h1 {
+            font-size: 3em;
+            color: #ffdd44;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 20px;
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            color: #cccccc;
+        }
+
+        .action-section {
+            margin-bottom: 30px;
+        }
+
+        .action-section h3 {
+            color: #ffdd44;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        button {
+            background: #ffdd44;
+            color: #000;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.2s ease;
+            min-width: 150px;
+        }
+
+        button:hover {
+            background: #ffcc00;
+            transform: scale(1.05);
+        }
+
+        input {
+            padding: 12px 15px;
+            font-size: 1.1em;
+            border: 2px solid #ccc;
+            border-radius: 8px;
+            margin: 10px;
+            text-align: center;
+            text-transform: uppercase;
+            font-weight: bold;
+            max-width: 200px;
+        }
+
+        .room-code-display {
+            background: rgba(255, 221, 68, 0.2);
+            border: 2px solid #ffdd44;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .room-code-display h3 {
+            color: #ffdd44;
+            margin-bottom: 10px;
+        }
+
+        .room-code {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ffdd44;
+            letter-spacing: 3px;
+            margin: 10px 0;
+        }
+
+        .share-link {
+            font-size: 0.9em;
+            color: #cccccc;
+            word-break: break-all;
+            margin: 10px 0;
+        }
+
+        .divider {
+            margin: 30px 0;
+            height: 2px;
+            background: linear-gradient(to right, transparent, #ffdd44, transparent);
+        }
+
+        .error {
+            color: #ff4444;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .instructions {
+            font-size: 0.9em;
+            color: #cccccc;
+            margin-top: 30px;
+            line-height: 1.4;
+        }
+
+        .hint {
+            font-size: 0.8em;
+            color: #aaaaaa;
+            margin-top: 8px;
+            font-style: italic;
+        }
+
+        @media (max-width: 600px) {
+            .lobby-container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            button {
+                min-width: 120px;
+                padding: 12px 20px;
+            }
+
+            input {
+                max-width: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="lobby-container">
+        <h1>CircleStrike</h1>
+        <p class="subtitle">Real-time Multiplayer Shooter</p>
+
+        <!-- Create Room Section -->
+        <div class="action-section">
+            <h3>Create New Game</h3>
+            <input
+                type="text"
+                id="customRoomCode"
+                placeholder="YOUR ROOM CODE (optional)"
+                maxlength="20"
+                oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '')"
+            >
+            <br>
+            <button onclick="createRoom()">Create Room</button>
+            <div class="hint">Leave empty for random code, or enter: CAT, DOG, 123, etc.</div>
+        </div>
+
+        <!-- Room Created Display -->
+        <div id="roomCreated" class="room-code-display">
+            <h3>Room Created!</h3>
+            <div class="room-code" id="roomCodeDisplay">ABC123</div>
+            <div class="share-link">Share this link with friends:</div>
+            <div class="share-link" id="shareLink">http://localhost:8080/room/ABC123</div>
+            <button onclick="joinCreatedRoom()">Start Game</button>
+        </div>
+
+        <div class="divider"></div>
+
+        <!-- Join Room Section -->
+        <div class="action-section">
+            <h3>Join Friend's Game</h3>
+            <input
+                type="text"
+                id="roomCodeInput"
+                placeholder="ROOM CODE"
+                maxlength="20"
+                oninput="this.value = this.value.toUpperCase().replace(/[^A-Z0-9]/g, '')"
+            >
+            <br>
+            <button onclick="joinRoom()">Join Room</button>
+        </div>
+
+        <div id="error" class="error"></div>
+
+        <div class="instructions">
+            <strong>How to Play:</strong><br>
+            • Create a room and share the code with friends<br>
+            • Or join using a friend's room code<br>
+            • WASD to move, mouse to aim, click to shoot<br>
+            • 3 lives per player, last one standing wins!
+        </div>
+    </div>
+
+    <script>
+        let currentRoomCode = null;
+
+        async function createRoom() {
+            try {
+                const customCode = document.getElementById('customRoomCode').value.trim();
+
+                const response = await fetch('/create-room', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        room_code: customCode
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.room_code) {
+                    currentRoomCode = data.room_code;
+
+                    document.getElementById('roomCodeDisplay').textContent = currentRoomCode;
+                    document.getElementById('shareLink').textContent =
+                        `${window.location.origin}/room/${currentRoomCode}`;
+                    document.getElementById('roomCreated').style.display = 'block';
+                    document.getElementById('error').textContent = '';
+                } else {
+                    showError(data.error || 'Failed to create room. Please try again.');
+                }
+            } catch (error) {
+                showError('Network error. Please check your connection.');
+            }
+        }
+
+        function joinCreatedRoom() {
+            if (currentRoomCode) {
+                window.location.href = `/room/${currentRoomCode}`;
+            }
+        }
+
+        function joinRoom() {
+            const roomCode = document.getElementById('roomCodeInput').value.trim();
+
+            if (!roomCode) {
+                showError('Please enter a room code.');
+                return;
+            }
+
+            if (roomCode.length < 2) {
+                showError('Room code must be at least 2 characters.');
+                return;
+            }
+
+            // Navigate to room
+            window.location.href = `/room/${roomCode}`;
+        }
+
+        function showError(message) {
+            document.getElementById('error').textContent = message;
+            setTimeout(() => {
+                document.getElementById('error').textContent = '';
+            }, 5000);
+        }
+
+        // Allow Enter key functionality
+        document.getElementById('roomCodeInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                joinRoom();
+            }
+        });
+
+        document.getElementById('customRoomCode').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                createRoom();
+            }
+        });
+
+        // Copy room code functionality
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                // Could show a "Copied!" message
+            });
+        }
+
+        // Make room code clickable to copy
+        document.addEventListener('DOMContentLoaded', function() {
+            const roomCodeDisplay = document.getElementById('roomCodeDisplay');
+            const shareLink = document.getElementById('shareLink');
+
+            if (roomCodeDisplay) {
+                roomCodeDisplay.addEventListener('click', function() {
+                    copyToClipboard(this.textContent);
+                    this.style.background = '#ffdd44';
+                    this.style.color = '#000';
+                    setTimeout(() => {
+                        this.style.background = '';
+                        this.style.color = '#ffdd44';
+                    }, 200);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

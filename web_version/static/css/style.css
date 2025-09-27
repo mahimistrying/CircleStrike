@@ -1,0 +1,283 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #1e3c72, #2a5298);
+    color: white;
+    overflow: hidden;
+}
+
+#gameContainer {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#gameCanvas {
+    border: 3px solid #fff;
+    border-radius: 10px;
+    background: #000;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+#ui {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+}
+
+#gameInfo h1 {
+    font-size: 2.5em;
+    color: #ffdd44;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    margin-bottom: 10px;
+}
+
+#status {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding: 5px 10px;
+    background: rgba(0,0,0,0.7);
+    border-radius: 5px;
+}
+
+#roomInfo {
+    background: rgba(255, 221, 68, 0.2);
+    border: 1px solid #ffdd44;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 0.9em;
+    color: #ffdd44;
+}
+
+#playerInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 15px;
+    min-width: 200px;
+}
+
+#playerInfo span {
+    background: rgba(0,0,0,0.7);
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+#cooldown {
+    background: rgba(255,0,0,0.8);
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
+
+#instructions {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0,0,0,0.8);
+    padding: 10px 15px;
+    border-radius: 8px;
+    max-width: 250px;
+    font-size: 0.75em;
+    z-index: 100;
+}
+
+#instructions h3 {
+    color: #ffdd44;
+    margin-bottom: 8px;
+}
+
+#instructions p {
+    font-size: 0.85em;
+    line-height: 1.3;
+    margin-bottom: 5px;
+}
+
+/* Mobile Controls */
+#mobileControls {
+    display: none;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    padding: 0 20px;
+    z-index: 15;
+}
+
+#joystick {
+    position: absolute;
+    left: 20px;
+    bottom: 20px;
+    width: 120px;
+    height: 120px;
+}
+
+#joystickBase {
+    width: 100%;
+    height: 100%;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    position: relative;
+}
+
+#joystickKnob {
+    width: 40px;
+    height: 40px;
+    background: #ffdd44;
+    border: 2px solid #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.1s ease;
+}
+
+#shootButton {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    width: 100px;
+    height: 100px;
+    background: #ff4444;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.1s ease;
+}
+
+#shootButton:active {
+    background: #cc3333;
+    transform: scale(0.95);
+}
+
+/* Game Over Screen */
+#gameOverScreen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 20;
+}
+
+#gameOverContent {
+    text-align: center;
+    background: rgba(0,0,0,0.9);
+    padding: 40px;
+    border-radius: 15px;
+    border: 3px solid #fff;
+}
+
+#gameOverText {
+    font-size: 4em;
+    color: #ff4444;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.7);
+    margin-bottom: 20px;
+}
+
+#gameOverContent button {
+    background: #ffdd44;
+    color: #000;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+#gameOverContent button:hover {
+    background: #ffcc00;
+    transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #mobileControls {
+        display: block;
+    }
+
+    #instructions {
+        display: none;
+    }
+
+    #gameCanvas {
+        width: 95vw;
+        height: auto;
+    }
+
+    #gameInfo h1 {
+        font-size: 1.8em;
+    }
+
+    #ui {
+        top: 10px;
+        left: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    #gameInfo h1 {
+        font-size: 1.5em;
+    }
+
+    #playerInfo span {
+        font-size: 0.8em;
+    }
+
+    #joystick {
+        width: 100px;
+        height: 100px;
+    }
+
+    #joystickKnob {
+        width: 35px;
+        height: 35px;
+    }
+
+    #shootButton {
+        width: 80px;
+        height: 80px;
+        font-size: 12px;
+    }
+}
+
+/* Canvas scaling for different screen sizes */
+@media (max-aspect-ratio: 4/3) {
+    #gameCanvas {
+        width: 95vw;
+        height: auto;
+    }
+}
+
+@media (min-aspect-ratio: 4/3) {
+    #gameCanvas {
+        height: 85vh;
+        width: auto;
+    }
+}
