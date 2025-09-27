@@ -21,6 +21,7 @@
                 <div id="cooldown" style="display: none;">
                     <span id="cooldownText">Cooldown: 3.0s</span>
                 </div>
+                <button id="quitButton" onclick="quitGame()">Quit Game</button>
             </div>
         </div>
 
@@ -29,6 +30,7 @@
             <h3>Controls:</h3>
             <p><strong>Desktop:</strong> WASD to move, mouse to aim, click to shoot</p>
             <p><strong>Mobile:</strong> Touch joystick to move, tap to shoot</p>
+            <p><strong>ESC key or Quit button to return to lobby</strong></p>
         </div>
 
         <canvas id="gameCanvas" width="1024" height="768"></canvas>
@@ -48,6 +50,7 @@
                 <h1 id="gameOverText">YOU WIN!</h1>
                 <p>Game Over</p>
                 <button onclick="playAgain()">Play Again</button>
+                <button onclick="quitGame()">Quit to Lobby</button>
             </div>
         </div>
     </div>

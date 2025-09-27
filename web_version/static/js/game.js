@@ -152,6 +152,12 @@ class CircleStrikeGame {
         // Keyboard events
         document.addEventListener('keydown', (e) => {
             this.keys[e.key.toLowerCase()] = true;
+
+            // ESC key to quit game
+            if (e.key === 'Escape') {
+                e.preventDefault();
+                quitGame();
+            }
         });
 
         document.addEventListener('keyup', (e) => {
@@ -450,7 +456,15 @@ function playAgain() {
     window.location.href = '/';
 }
 
+function quitGame() {
+    // Disconnect from WebSocket and go back to lobby
+    if (window.game && window.game.ws) {
+        window.game.ws.close();
+    }
+    window.location.href = '/';
+}
+
 // Start the game when page loads
 window.addEventListener('load', () => {
-    new CircleStrikeGame();
+    window.game = new CircleStrikeGame();
 });
