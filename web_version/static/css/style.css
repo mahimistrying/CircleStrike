@@ -129,34 +129,39 @@ body {
 #mobileControls {
     display: none;
     position: absolute;
-    bottom: 20px;
-    width: 100%;
-    padding: 0 20px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 180px;
+    padding: 20px;
     z-index: 15;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent);
 }
 
 #joystick {
     position: absolute;
-    left: 20px;
-    bottom: 20px;
-    width: 120px;
-    height: 120px;
+    left: 30px;
+    bottom: 30px;
+    width: 140px;
+    height: 140px;
+    touch-action: none;
 }
 
 #joystickBase {
     width: 100%;
     height: 100%;
-    border: 3px solid #fff;
+    border: 4px solid #fff;
     border-radius: 50%;
-    background: rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.15);
     position: relative;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
 }
 
 #joystickKnob {
-    width: 40px;
-    height: 40px;
-    background: #ffdd44;
-    border: 2px solid #fff;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #ffdd44, #ffcc00);
+    border: 3px solid #fff;
     border-radius: 50%;
     position: absolute;
     top: 50%;
@@ -164,28 +169,35 @@ body {
     transform: translate(-50%, -50%);
     cursor: pointer;
     transition: all 0.1s ease;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
 #shootButton {
     position: absolute;
-    right: 20px;
-    bottom: 20px;
-    width: 100px;
-    height: 100px;
-    background: #ff4444;
-    border: 3px solid #fff;
+    right: 30px;
+    bottom: 30px;
+    width: 120px;
+    height: 120px;
+    background: linear-gradient(135deg, #ff4444, #cc3333);
+    border: 4px solid #fff;
     border-radius: 50%;
     color: white;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 16px;
     cursor: pointer;
     user-select: none;
     transition: all 0.1s ease;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+    touch-action: manipulation;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 #shootButton:active {
-    background: #cc3333;
+    background: linear-gradient(135deg, #cc3333, #aa2222);
     transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.6);
 }
 
 /* Game Over Screen */
@@ -236,8 +248,61 @@ body {
 }
 
 /* Responsive Design */
+/* Mobile UI Improvements */
+#mobileUI {
+    display: none;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.8);
+    border-radius: 10px;
+    padding: 15px;
+    z-index: 12;
+}
+
+#mobileGameInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#mobileGameInfo h1 {
+    font-size: 1.5em;
+    color: #ffdd44;
+    margin: 0;
+}
+
+#mobilePlayerInfo {
+    display: flex;
+    gap: 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+#mobileQuitButton {
+    background: #ff4444;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     #mobileControls {
+        display: block;
+    }
+
+    #ui {
+        display: none;
+    }
+
+    #mobileUI {
         display: block;
     }
 
@@ -246,43 +311,80 @@ body {
     }
 
     #gameCanvas {
-        width: 95vw;
-        height: auto;
+        width: 100vw;
+        height: 100vh;
+        max-width: none;
+        max-height: none;
+        border: none;
+        border-radius: 0;
     }
 
-    #gameInfo h1 {
-        font-size: 1.8em;
+    #gameContainer {
+        width: 100vw;
+        height: 100vh;
+        padding: 0;
+        margin: 0;
     }
 
-    #ui {
-        top: 10px;
-        left: 10px;
+    body {
+        overflow: hidden;
+        margin: 0;
+        padding: 0;
+    }
+
+    #gameOverContent {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    #gameOverContent h1 {
+        font-size: 2.5em;
+    }
+
+    #gameOverContent button {
+        padding: 12px 25px;
+        font-size: 1em;
+        margin: 8px;
     }
 }
 
 @media (max-width: 480px) {
-    #gameInfo h1 {
-        font-size: 1.5em;
-    }
-
-    #playerInfo span {
-        font-size: 0.8em;
-    }
-
     #joystick {
-        width: 100px;
-        height: 100px;
+        width: 120px;
+        height: 120px;
+        left: 20px;
+        bottom: 20px;
     }
 
     #joystickKnob {
-        width: 35px;
-        height: 35px;
+        width: 45px;
+        height: 45px;
     }
 
     #shootButton {
-        width: 80px;
-        height: 80px;
-        font-size: 12px;
+        width: 100px;
+        height: 100px;
+        right: 20px;
+        bottom: 20px;
+        font-size: 14px;
+    }
+
+    #mobileControls {
+        height: 160px;
+        padding: 15px;
+    }
+
+    #mobileGameInfo h1 {
+        font-size: 1.3em;
+    }
+
+    #mobilePlayerInfo {
+        font-size: 0.8em;
+        gap: 10px;
+    }
+
+    #mobileUI {
+        padding: 12px;
     }
 }
 

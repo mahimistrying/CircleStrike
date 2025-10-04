@@ -410,17 +410,22 @@ class SinglePlayerGame {
     }
 
     updateCooldown() {
-        const cooldownDiv = document.getElementById('cooldown');
-        const cooldownText = document.getElementById('cooldownText');
-
         if (!this.canShoot) {
             const timeLeft = Math.max(0, (this.cooldownEndTime - Date.now()) / 1000);
             if (timeLeft > 0) {
-                cooldownDiv.style.display = 'block';
-                cooldownText.textContent = `Cooldown: ${timeLeft.toFixed(1)}s`;
+                // Update desktop UI
+                document.getElementById('cooldown').style.display = 'block';
+                document.getElementById('cooldownText').textContent = `Cooldown: ${timeLeft.toFixed(1)}s`;
+
+                // Update mobile UI
+                document.getElementById('mobileCooldown').style.display = 'block';
+                document.getElementById('mobileCooldownText').textContent = `Cooldown: ${timeLeft.toFixed(1)}s`;
             } else {
                 this.canShoot = true;
-                cooldownDiv.style.display = 'none';
+
+                // Hide cooldown displays
+                document.getElementById('cooldown').style.display = 'none';
+                document.getElementById('mobileCooldown').style.display = 'none';
             }
         }
     }
@@ -516,16 +521,27 @@ class SinglePlayerGame {
     }
 
     updateStatus(message, color = '#ffffff') {
+        // Update desktop UI
         const statusElement = document.getElementById('status');
         statusElement.textContent = message;
         statusElement.style.color = color;
+
+        // Update mobile UI
+        const mobileStatusElement = document.getElementById('mobileStatus');
+        mobileStatusElement.textContent = message;
+        mobileStatusElement.style.color = color;
     }
 
     updatePlayerInfo() {
         const player = this.players[this.myPlayerId];
         if (player) {
+            // Update desktop UI
             document.getElementById('lives').textContent = `Lives: ${player.lives}`;
             document.getElementById('health').textContent = `Health: ${player.health}`;
+
+            // Update mobile UI
+            document.getElementById('mobileLives').textContent = `Lives: ${player.lives}`;
+            document.getElementById('mobileHealth').textContent = `Health: ${player.health}`;
         }
     }
 

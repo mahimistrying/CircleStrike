@@ -317,8 +317,17 @@ class CircleStrikeGame {
         if (!this.canShoot) {
             const remaining = Math.max(0, this.cooldownEndTime - Date.now() / 1000);
             if (remaining > 0) {
+                // Update desktop UI
                 document.getElementById('cooldown').style.display = 'block';
                 document.getElementById('cooldownText').textContent = `Cooldown: ${remaining.toFixed(1)}s`;
+
+                // Update mobile UI
+                document.getElementById('mobileCooldown').style.display = 'block';
+                document.getElementById('mobileCooldownText').textContent = `Cooldown: ${remaining.toFixed(1)}s`;
+            } else {
+                // Hide cooldown displays
+                document.getElementById('cooldown').style.display = 'none';
+                document.getElementById('mobileCooldown').style.display = 'none';
             }
         }
     }
@@ -326,9 +335,15 @@ class CircleStrikeGame {
     updatePlayerInfo() {
         if (this.myPlayerId && this.players[this.myPlayerId]) {
             const player = this.players[this.myPlayerId];
+
+            // Update desktop UI
             document.getElementById('playerId').textContent = `Player: ${this.myPlayerId}`;
             document.getElementById('lives').textContent = `Lives: ${player.lives}`;
             document.getElementById('health').textContent = `Health: ${player.health}`;
+
+            // Update mobile UI
+            document.getElementById('mobileLives').textContent = `Lives: ${player.lives}`;
+            document.getElementById('mobileHealth').textContent = `Health: ${player.health}`;
         }
 
         // Update player count
@@ -337,9 +352,15 @@ class CircleStrikeGame {
     }
 
     updateStatus(text, color) {
+        // Update desktop UI
         const statusElement = document.getElementById('status');
         statusElement.textContent = text;
         statusElement.style.color = color;
+
+        // Update mobile UI
+        const mobileStatusElement = document.getElementById('mobileStatus');
+        mobileStatusElement.textContent = text;
+        mobileStatusElement.style.color = color;
     }
 
     showGameOver(isWinner) {
