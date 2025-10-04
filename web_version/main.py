@@ -153,8 +153,46 @@ class GameManager:
                     "type": "game_resumed"
                 })
 
-            # Skip bullet updates if game is paused
+            # During pause, only check collisions but don't update bullet positions
             if self.game_paused:
+                # Still check collisions for existing bullets
+                for bullet in self.bullets:
+                    if not bullet.active:
+                        continue
+
+                    # Check collision with players
+                    for target_id, target in self.players.items():
+                        if target_id == bullet.owner_id or not target.alive:
+                            continue
+
+                        dx = bullet.x - target.x
+                        dy = bullet.y - target.y
+                        distance = math.sqrt(dx * dx + dy * dy)
+
+                        if distance < 23:  # collision
+                            target.health -= 25
+                            bullet.active = False
+
+                            if target.health <= 0:
+                                target.lives -= 1
+                                target.health = 100
+
+                            await self.broadcast({
+                                "type": "player_update",
+                                "player_id": target_id,
+                                "health": target.health,
+                                "lives": target.lives,
+                                "alive": target.alive,
+                                "x": target.x,
+                                "y": target.y
+                            })
+
+                            await self.broadcast({
+                                "type": "bullet_removed",
+                                "bullet_id": bullet.id
+                            })
+                            break
+
                 await asyncio.sleep(1/60)
                 continue
 
@@ -331,6 +369,10 @@ async def get_homepage(request: Request):
 @app.get("/room/{room_code}")
 async def get_game_room(request: Request, room_code: str):
     return templates.TemplateResponse("game.html", {"request": request, "room_code": room_code})
+
+@app.get("/singleplayer")
+async def get_singleplayer(request: Request):
+    return templates.TemplateResponse("singleplayer.html", {"request": request})
 
 @app.post("/create-room")
 async def create_room(request: Request):

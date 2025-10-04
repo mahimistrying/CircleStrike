@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CircleStrike - Single Player</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=11">
+</head>
+<body>
+    <div id="gameContainer">
+        <div id="ui">
+            <div id="gameInfo">
+                <h1>CircleStrike</h1>
+                <div id="roomInfo">Mode: <span id="gameMode">Single Player</span></div>
+                <div id="status">Starting...</div>
+                <div id="playerInfo">
+                    <span id="playerId">Player: You</span>
+                    <span id="lives">Lives: 3</span>
+                    <span id="health">Health: 100</span>
+                </div>
+                <div id="cooldown" style="display: none;">
+                    <span id="cooldownText">Cooldown: 3.0s</span>
+                </div>
+                <button id="quitButton" onclick="quitGame()">Quit Game</button>
+            </div>
+        </div>
+
+        <!-- Instructions moved outside UI container -->
+        <div id="instructions">
+            <h3>Controls:</h3>
+            <p><strong>Desktop:</strong> WASD to move, mouse to aim, click to shoot</p>
+            <p><strong>Mobile:</strong> Touch joystick to move, tap to shoot</p>
+            <p><strong>ESC key or Quit button to return to lobby</strong></p>
+        </div>
+
+        <canvas id="gameCanvas" width="1024" height="768"></canvas>
+
+        <!-- Mobile controls -->
+        <div id="mobileControls">
+            <div id="joystick">
+                <div id="joystickBase"></div>
+                <div id="joystickKnob"></div>
+            </div>
+            <button id="shootButton">SHOOT</button>
+        </div>
+
+        <!-- Game over screen -->
+        <div id="gameOverScreen" style="display: none;">
+            <div id="gameOverContent">
+                <h1 id="gameOverText">YOU WIN!</h1>
+                <p>Game Over</p>
+                <button onclick="playAgain()">Play Again</button>
+                <button onclick="quitGame()">Quit to Lobby</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Single player mode flag
+        const singlePlayerMode = true;
+    </script>
+    <script src="/static/js/singleplayer.js"></script>
+</body>
+</html>

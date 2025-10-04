@@ -165,6 +165,15 @@
         <h1>CircleStrike</h1>
         <p class="subtitle">Real-time Multiplayer Shooter</p>
 
+        <!-- Single Player Section -->
+        <div class="action-section">
+            <h3>Single Player</h3>
+            <button onclick="startSinglePlayer()">Play vs Bots</button>
+            <div class="hint">Fight against AI opponents - great for practice!</div>
+        </div>
+
+        <div class="divider"></div>
+
         <!-- Create Room Section -->
         <div class="action-section">
             <h3>Create New Game</h3>
@@ -272,6 +281,10 @@
 
             // Navigate to room
             window.location.href = `/room/${roomCode}`;
+        }
+
+        function startSinglePlayer() {
+            window.location.href = '/singleplayer';
         }
 
         function showError(message) {
