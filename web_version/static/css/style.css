@@ -265,6 +265,8 @@ body {
 @media (min-width: 769px) {
     #mobileUI {
         display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
     }
 }
 
@@ -326,6 +328,12 @@ body {
 
     #mobileControls {
         display: none !important;
+    }
+
+    #mobileUI, #mobileGameInfo, #mobilePlayerInfo, #mobileStatus, #mobileCooldown, #mobileQuitButton {
+        display: none !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
     }
 }
 
