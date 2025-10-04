@@ -158,6 +158,14 @@ class CircleStrikeGame {
                 e.preventDefault();
                 quitGame();
             }
+
+            // Spacebar to shoot
+            if (e.key === ' ' || e.key === 'Space') {
+                e.preventDefault();
+                if (!this.gameOver && this.canShoot && this.myPlayerId && this.players[this.myPlayerId] && this.players[this.myPlayerId].alive) {
+                    this.shoot();
+                }
+            }
         });
 
         document.addEventListener('keyup', (e) => {

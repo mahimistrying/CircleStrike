@@ -98,6 +98,14 @@ class SinglePlayerGame {
                 e.preventDefault();
                 quitGame();
             }
+
+            // Spacebar to shoot
+            if (e.key === ' ' || e.key === 'Space') {
+                e.preventDefault();
+                if (!this.gameOver && this.canShoot && this.players[this.myPlayerId].alive) {
+                    this.shoot();
+                }
+            }
         });
 
         document.addEventListener('keyup', (e) => {
