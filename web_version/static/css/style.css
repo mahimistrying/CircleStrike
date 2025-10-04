@@ -261,6 +261,13 @@ body {
     z-index: 12;
 }
 
+/* Hide mobile UI on desktop */
+@media (min-width: 769px) {
+    #mobileUI {
+        display: none !important;
+    }
+}
+
 #mobileGameInfo {
     display: flex;
     justify-content: space-between;
@@ -309,7 +316,21 @@ body {
     #instructions {
         display: none;
     }
+}
 
+/* Ensure desktop UI shows on desktop */
+@media (min-width: 769px) {
+    #ui {
+        display: block !important;
+    }
+
+    #mobileControls {
+        display: none !important;
+    }
+}
+
+/* Continue mobile styles */
+@media (max-width: 768px) {
     #gameCanvas {
         width: 100vw;
         height: 100vh;
