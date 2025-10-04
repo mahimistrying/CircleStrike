@@ -15,20 +15,26 @@
             font-family: 'Arial', sans-serif;
             background: linear-gradient(135deg, #1e3c72, #2a5298);
             color: white;
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
+            margin: 0;
+            overflow-x: hidden;
         }
 
         .lobby-container {
             background: rgba(0, 0, 0, 0.8);
-            padding: 40px;
+            padding: 30px;
             border-radius: 15px;
             border: 3px solid #fff;
             text-align: center;
             max-width: 500px;
-            width: 90%;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            box-sizing: border-box;
         }
 
         h1 {
@@ -141,72 +147,152 @@
         }
 
         @media (max-width: 600px) {
+            body {
+                padding: 10px;
+                align-items: flex-start;
+                padding-top: 40px;
+            }
+
             .lobby-container {
                 padding: 20px;
-                max-width: 95%;
+                width: 100%;
+                max-width: 100%;
+                margin: 0;
+                max-height: 95vh;
             }
 
             h1 {
                 font-size: 2.2em;
+                margin-bottom: 15px;
             }
 
             .subtitle {
                 font-size: 1.1em;
+                margin-bottom: 25px;
             }
 
             button {
                 min-width: 140px;
                 padding: 15px 25px;
                 font-size: 1.1em;
-                margin: 15px 5px;
+                margin: 10px 5px;
             }
 
             input {
-                max-width: 200px;
+                max-width: 250px;
+                width: 90%;
                 padding: 15px 20px;
                 font-size: 1.1em;
-                margin: 15px 5px;
+                margin: 10px 5px;
+            }
+
+            .action-section {
+                margin-bottom: 25px;
             }
 
             .action-section h3 {
-                font-size: 1.4em;
-                margin-bottom: 20px;
+                font-size: 1.3em;
+                margin-bottom: 15px;
             }
 
             .hint {
                 font-size: 0.9em;
-                margin-top: 12px;
+                margin-top: 10px;
             }
 
             .instructions {
-                font-size: 1em;
-                line-height: 1.6;
+                font-size: 0.95em;
+                line-height: 1.5;
+                margin-top: 20px;
             }
 
             .room-code {
-                font-size: 1.8em;
+                font-size: 1.6em;
+            }
+
+            .divider {
+                margin: 20px 0;
             }
         }
 
         @media (max-width: 480px) {
+            body {
+                padding: 5px;
+                padding-top: 20px;
+            }
+
             .lobby-container {
                 padding: 15px;
+                max-height: 98vh;
             }
 
             h1 {
                 font-size: 1.8em;
+                margin-bottom: 10px;
+            }
+
+            .subtitle {
+                font-size: 1em;
+                margin-bottom: 20px;
             }
 
             button {
                 min-width: 120px;
                 padding: 12px 20px;
                 font-size: 1em;
+                margin: 8px 3px;
             }
 
             input {
-                max-width: 180px;
+                max-width: 200px;
+                width: 85%;
                 padding: 12px 15px;
                 font-size: 1em;
+                margin: 8px 3px;
+            }
+
+            .action-section {
+                margin-bottom: 20px;
+            }
+
+            .action-section h3 {
+                font-size: 1.2em;
+                margin-bottom: 12px;
+            }
+
+            .instructions {
+                font-size: 0.9em;
+                margin-top: 15px;
+            }
+
+            .room-code {
+                font-size: 1.4em;
+            }
+        }
+
+        @media (max-height: 600px) {
+            body {
+                align-items: flex-start;
+                padding-top: 10px;
+            }
+
+            .lobby-container {
+                max-height: 95vh;
+                overflow-y: auto;
+            }
+
+            h1 {
+                font-size: 2em;
+                margin-bottom: 10px;
+            }
+
+            .action-section {
+                margin-bottom: 20px;
+            }
+
+            .instructions {
+                font-size: 0.85em;
+                margin-top: 15px;
             }
         }
     </style>
