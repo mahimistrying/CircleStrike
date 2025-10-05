@@ -104,6 +104,15 @@ class CircleStrikeGame {
                 delete this.bullets[message.bullet_id];
                 break;
 
+            case 'bullet_bounced':
+                if (this.bullets[message.bullet_id]) {
+                    this.bullets[message.bullet_id].x = message.x;
+                    this.bullets[message.bullet_id].y = message.y;
+                    this.bullets[message.bullet_id].angle = message.angle;
+                    this.bullets[message.bullet_id].bounces = message.bounces;
+                }
+                break;
+
             case 'player_update':
                 if (this.players[message.player_id]) {
                     this.players[message.player_id].health = message.health;

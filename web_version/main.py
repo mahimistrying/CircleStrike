@@ -41,6 +41,8 @@ class Bullet:
         self.owner_id = owner_id
         self.speed = 10
         self.active = True
+        self.bounces = 0
+        self.max_bounces = 2
 
 class GameManager:
     def __init__(self):
@@ -207,14 +209,49 @@ class GameManager:
                 bullet.x += math.cos(bullet.angle) * bullet.speed
                 bullet.y += math.sin(bullet.angle) * bullet.speed
 
-                # Check if bullet is off screen
-                if bullet.x < 0 or bullet.x > 1024 or bullet.y < 0 or bullet.y > 768:
-                    bullet.active = False
+                # Check for wall collisions and bouncing
+                bounced = False
+
+                # Left or right wall collision
+                if bullet.x < 0 or bullet.x > 1024:
+                    if bullet.bounces < bullet.max_bounces:
+                        bullet.angle = math.pi - bullet.angle  # Reflect horizontally
+                        bullet.x = max(0, min(1024, bullet.x))  # Keep in bounds
+                        bullet.bounces += 1
+                        bounced = True
+                    else:
+                        bullet.active = False
+                        await self.broadcast({
+                            "type": "bullet_removed",
+                            "bullet_id": bullet.id
+                        })
+                        continue
+
+                # Top or bottom wall collision
+                if bullet.y < 0 or bullet.y > 768:
+                    if bullet.bounces < bullet.max_bounces:
+                        bullet.angle = -bullet.angle  # Reflect vertically
+                        bullet.y = max(0, min(768, bullet.y))  # Keep in bounds
+                        bullet.bounces += 1
+                        bounced = True
+                    else:
+                        bullet.active = False
+                        await self.broadcast({
+                            "type": "bullet_removed",
+                            "bullet_id": bullet.id
+                        })
+                        continue
+
+                # Broadcast bullet bounce if it bounced
+                if bounced:
                     await self.broadcast({
-                        "type": "bullet_removed",
-                        "bullet_id": bullet.id
+                        "type": "bullet_bounced",
+                        "bullet_id": bullet.id,
+                        "x": bullet.x,
+                        "y": bullet.y,
+                        "angle": bullet.angle,
+                        "bounces": bullet.bounces
                     })
-                    continue
 
                 # Check collision with players
                 hit = False

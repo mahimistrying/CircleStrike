@@ -317,7 +317,9 @@ class SinglePlayerGame {
             angle: player.angle,
             speed: 500,
             owner_id: this.myPlayerId,
-            active: true
+            active: true,
+            bounces: 0,
+            maxBounces: 2
         };
 
         this.canShoot = false;
@@ -337,7 +339,9 @@ class SinglePlayerGame {
             angle: bot.angle,
             speed: 500,
             owner_id: botId,
-            active: true
+            active: true,
+            bounces: 0,
+            maxBounces: 2
         };
     }
 
@@ -350,11 +354,35 @@ class SinglePlayerGame {
             bullet.x += Math.cos(bullet.angle) * bullet.speed * (1/60);
             bullet.y += Math.sin(bullet.angle) * bullet.speed * (1/60);
 
-            // Check if bullet is off screen
-            if (bullet.x < 0 || bullet.x > 1024 || bullet.y < 0 || bullet.y > 768) {
-                bullet.active = false;
-                delete this.bullets[bulletId];
-                continue;
+            // Check for wall collisions and bouncing
+            let bounced = false;
+
+            // Left or right wall collision
+            if (bullet.x < 0 || bullet.x > 1024) {
+                if (bullet.bounces < bullet.maxBounces) {
+                    bullet.angle = Math.PI - bullet.angle; // Reflect horizontally
+                    bullet.x = Math.max(0, Math.min(1024, bullet.x)); // Keep in bounds
+                    bullet.bounces++;
+                    bounced = true;
+                } else {
+                    bullet.active = false;
+                    delete this.bullets[bulletId];
+                    continue;
+                }
+            }
+
+            // Top or bottom wall collision
+            if (bullet.y < 0 || bullet.y > 768) {
+                if (bullet.bounces < bullet.maxBounces) {
+                    bullet.angle = -bullet.angle; // Reflect vertically
+                    bullet.y = Math.max(0, Math.min(768, bullet.y)); // Keep in bounds
+                    bullet.bounces++;
+                    bounced = true;
+                } else {
+                    bullet.active = false;
+                    delete this.bullets[bulletId];
+                    continue;
+                }
             }
 
             // Check collision with players
