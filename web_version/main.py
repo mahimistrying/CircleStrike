@@ -127,7 +127,9 @@ class GameManager:
                         "x": bullet.x,
                         "y": bullet.y,
                         "angle": bullet.angle,
-                        "owner_id": bullet.owner_id
+                        "owner_id": bullet.owner_id,
+                        "bounces": bullet.bounces,
+                        "max_bounces": bullet.max_bounces
                     }
                 })
 
@@ -242,16 +244,16 @@ class GameManager:
                         })
                         continue
 
-                # Broadcast bullet bounce if it bounced
-                if bounced:
-                    await self.broadcast({
-                        "type": "bullet_bounced",
-                        "bullet_id": bullet.id,
-                        "x": bullet.x,
-                        "y": bullet.y,
-                        "angle": bullet.angle,
-                        "bounces": bullet.bounces
-                    })
+                # Broadcast bullet position update (including bounces)
+                await self.broadcast({
+                    "type": "bullet_update",
+                    "bullet_id": bullet.id,
+                    "x": bullet.x,
+                    "y": bullet.y,
+                    "angle": bullet.angle,
+                    "bounces": bullet.bounces,
+                    "bounced": bounced
+                })
 
                 # Check collision with players
                 hit = False

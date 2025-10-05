@@ -97,14 +97,18 @@ class CircleStrikeGame {
                 break;
 
             case 'bullet_fired':
-                this.bullets[message.bullet.id] = message.bullet;
+                this.bullets[message.bullet.id] = {
+                    ...message.bullet,
+                    bounces: message.bullet.bounces || 0,
+                    max_bounces: message.bullet.max_bounces || 2
+                };
                 break;
 
             case 'bullet_removed':
                 delete this.bullets[message.bullet_id];
                 break;
 
-            case 'bullet_bounced':
+            case 'bullet_update':
                 if (this.bullets[message.bullet_id]) {
                     this.bullets[message.bullet_id].x = message.x;
                     this.bullets[message.bullet_id].y = message.y;
@@ -389,19 +393,8 @@ class CircleStrikeGame {
 
 
     updateBullets() {
-        // Don't update bullets if game is paused
-        if (this.game_paused) return;
-
-        // Update bullet positions client-side for smooth movement
-        for (const bullet of Object.values(this.bullets)) {
-            bullet.x += Math.cos(bullet.angle) * 10;
-            bullet.y += Math.sin(bullet.angle) * 10;
-
-            // Remove bullets that go off-screen
-            if (bullet.x < 0 || bullet.x > 1024 || bullet.y < 0 || bullet.y > 768) {
-                delete this.bullets[bullet.id];
-            }
-        }
+        // Server handles all bullet physics including bouncing
+        // Client only renders bullets at positions provided by server
     }
 
     updatePause() {
