@@ -151,6 +151,12 @@ class CircleStrikeGame {
     setupEventListeners() {
         // Keyboard events
         document.addEventListener('keydown', (e) => {
+            // Prevent key repeat for shooting
+            if ((e.key === ' ' || e.key === 'Space') && e.repeat) {
+                e.preventDefault();
+                return;
+            }
+
             this.keys[e.key.toLowerCase()] = true;
 
             // ESC key to quit game
@@ -159,7 +165,7 @@ class CircleStrikeGame {
                 quitGame();
             }
 
-            // Spacebar to shoot
+            // Spacebar to shoot (only on initial press, not repeat)
             if (e.key === ' ' || e.key === 'Space') {
                 e.preventDefault();
                 if (!this.gameOver && this.canShoot && this.myPlayerId && this.players[this.myPlayerId] && this.players[this.myPlayerId].alive) {
